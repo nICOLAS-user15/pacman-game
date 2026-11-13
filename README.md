@@ -4,9 +4,11 @@ Recriação do Pac-Man em HTML5 Canvas e JavaScript puro, com cinco fases, telet
 
 Projeto feito para estudo de game loop, colisão em grade e inteligência artificial simples de fantasmas. Não usa dependências nem etapa de build.
 
+**[Jogar online](https://nicolas-user15.github.io/pacman-game/)**
+
 ## Como rodar
 
-Não precisa instalar nada. Clone o repositório e abra o `index.html` no navegador:
+Para rodar localmente, não precisa instalar nada. Clone o repositório e abra o `index.html` no navegador:
 
 ```bash
 git clone https://github.com/nICOLAS-user15/pacman-game.git
