@@ -1,59 +1,63 @@
 # Pac-Man Arcade
 
-Recriação do Pac-Man em HTML5 Canvas e JavaScript puro, com cinco fases, teletransporte nas laterais e nos cantos, e controles pelo teclado.
+A Pac-Man recreation built with HTML5 Canvas and vanilla JavaScript, featuring five levels, side and corner tunnels, and keyboard controls.
 
-Projeto feito para estudo de game loop, colisão em grade e inteligência artificial simples de fantasmas. Não usa dependências nem etapa de build.
+A study project on game loops, grid-based collision, and simple ghost AI. It has no dependencies and no build step.
 
-**[Jogar online](https://nicolas-user15.github.io/pacman-game/)**
+**[Play online](https://nicolas-user15.github.io/pacman-game/)**
 
-## Como rodar
+## Getting started
 
-Para rodar localmente, não precisa instalar nada. Clone o repositório e abra o `index.html` no navegador:
+To run it locally you don't need to install anything. Clone the repository and open `index.html` in your browser:
 
 ```bash
 git clone https://github.com/nICOLAS-user15/pacman-game.git
 cd pacman-game
 ```
 
-Depois abra o arquivo `index.html`. Se preferir um servidor local, use:
+If you prefer a local server (requires Node.js 18+), run:
 
 ```bash
 npm start
 ```
 
-## Controles
+This starts a small dependency-free static server and opens the game in your default browser. Set the `PORT` environment variable to change the port (default: 8080).
 
-| Ação | Teclado |
+## Controls
+
+| Action | Keys |
 |---|---|
-| Mover | Setas ou W A S D |
-| Pausar e continuar | Espaço |
-| Tela cheia | F |
-| Sair da tela cheia | Esc |
+| Move | Arrow keys or W A S D |
+| Pause / resume | Space |
+| Fullscreen | F |
+| Exit fullscreen | Esc |
 
-## Fases
+## Levels
 
-O jogo tem cinco labirintos. Cada um muda cores, velocidade dos fantasmas, duração do modo assustado e tempo de saída da casa dos fantasmas. A quinta fase tem os fantasmas mais rápidos.
+The game has five mazes. Each one changes the color theme, ghost speed, frightened-mode duration, and how long ghosts wait before leaving their house. Level five has the fastest ghosts.
 
-## Estrutura
+## Project structure
 
 ```
-├── index.html   # Página, painel e botões
-├── style.css    # Estilos e tela cheia
-├── game.js      # Lógica do jogo: mapas, Pac-Man, fantasmas, pontuação e áudio
-├── package.json # Script para servidor local
+├── index.html   # Page layout, HUD, and modals
+├── style.css    # Styles and fullscreen layout
+├── game.js      # Game logic: mazes, player, ghosts, scoring, and audio
+├── server.js    # Dependency-free local static server
+├── package.json # npm start script
 └── LICENSE
 ```
 
-## Como funciona
+## How it works
 
-- **Renderização:** tudo é desenhado num `<canvas>` a cada quadro, com `requestAnimationFrame`.
-- **Mapas:** cada fase é uma matriz 19 × 21 em que cada número representa um tipo de célula: parede, pílula, pílula de poder, porta da casa dos fantasmas, portal e área vazia.
-- **Movimento:** o Pac-Man anda alinhado ao centro dos corredores, o que evita atravessar paredes nas curvas.
-- **Fantasmas:** cada um escolhe a direção seguinte olhando para um alvo no tabuleiro. Não voltam para trás, a não ser quando são derrotados ou ficam assustados.
-- **Áudio:** os efeitos sonoros são gerados com a Web Audio API, sem arquivos de som.
+- **Rendering:** everything is drawn to a single `<canvas>` every frame using `requestAnimationFrame`.
+- **Mazes:** each level is a 19 × 21 matrix where every number represents a cell type: wall, pellet, power pellet, ghost-house door, tunnel, or empty space.
+- **Movement:** the player is locked to the center of corridors, which prevents clipping through walls at corners.
+- **Ghosts:** each ghost picks its next direction by looking toward a target tile on the board. They never reverse, except when eaten or frightened.
+- **Audio:** sound effects are synthesized with the Web Audio API, so there are no audio files.
+- **Persistence:** the high score is stored in `localStorage`.
 
-## Licença
+## License
 
-Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE).
+Distributed under the MIT License. See [LICENSE](LICENSE).
 
-Este projeto é uma recriação para fins de estudo. O nome Pac-Man e o personagem são marcas e propriedade intelectual de seus detentores, e não estão cobertos pela licença deste repositório.
+This is a study project. The Pac-Man name and character are trademarks and intellectual property of their respective owners, and are not covered by this repository's license.

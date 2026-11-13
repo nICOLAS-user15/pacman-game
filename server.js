@@ -1,4 +1,4 @@
-// Servidor estático local, sem dependências. Uso: npm start (ou node server.js)
+// Dependency-free local static server. Usage: npm start (or node server.js)
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -22,7 +22,7 @@ const server = http.createServer((req, res) => {
   const urlPath = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
   let filePath = path.normalize(path.join(ROOT, urlPath));
 
-  // Bloqueia acesso a arquivos fora da pasta do projeto
+  // Block access to files outside the project folder
   if (!filePath.startsWith(ROOT)) {
     res.writeHead(403).end('Forbidden');
     return;
@@ -33,7 +33,7 @@ const server = http.createServer((req, res) => {
 
     fs.readFile(filePath, (readErr, data) => {
       if (readErr) {
-        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Não encontrado');
+        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Not found');
         return;
       }
       const type = TYPES[path.extname(filePath).toLowerCase()] || 'application/octet-stream';
@@ -42,7 +42,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
-// Abre a URL no navegador padrão do sistema
+// Open the URL in the system's default browser
 function openBrowser(url) {
   const { spawn } = require('node:child_process');
   let cmd;
@@ -60,13 +60,13 @@ function openBrowser(url) {
   try {
     spawn(cmd, args, { detached: true, stdio: 'ignore', windowsHide: true }).on('error', () => {}).unref();
   } catch (e) {
-    console.log(`Não foi possível abrir o navegador. Acesse ${url} manualmente.`);
+    console.log(`Could not open the browser. Visit ${url} manually.`);
   }
 }
 
 server.listen(PORT, () => {
   const url = `http://localhost:${PORT}/index.html`;
-  console.log(`Jogo rodando em ${url}`);
-  console.log('Pressione Ctrl+C para encerrar.');
+  console.log(`Game running at ${url}`);
+  console.log('Press Ctrl+C to stop.');
   openBrowser(url);
 });

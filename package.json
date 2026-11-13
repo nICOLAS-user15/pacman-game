@@ -1,7 +1,7 @@
 {
   "name": "pacman-game",
   "version": "1.0.0",
-  "description": "Recriação do Pac-Man em HTML5 Canvas e JavaScript puro.",
+  "description": "A Pac-Man recreation built with HTML5 Canvas and vanilla JavaScript.",
   "main": "index.html",
   "scripts": {
     "start": "node server.js"
