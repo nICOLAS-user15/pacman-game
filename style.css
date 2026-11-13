@@ -587,12 +587,114 @@ body {
   display: none !important;
 }
 
-@media (max-width: 440px) {
+/* =======================================================
+   RESPONSIVO / MOBILE
+   ======================================================= */
+
+/* O canvas escala para caber na largura E na altura da tela
+   (proporção 19:21), mantendo a resolução interna 380x420. */
+.canvas-container {
+  width: min(100%, calc((100dvh - 230px) * 19 / 21));
+  min-width: 220px;
+  touch-action: none;
+}
+
+#gameCanvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 19 / 21;
+  touch-action: none;
+}
+
+/* Direcional na tela: só aparece em telas de toque */
+.dpad {
+  display: none;
+  position: relative;
+  width: 168px;
+  height: 168px;
+  margin-top: 12px;
+  flex-shrink: 0;
+}
+
+.dpad-btn {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+  color: #cbd5e1;
+  background: rgba(32, 40, 72, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dpad-btn:active {
+  background: rgba(37, 99, 235, 0.85);
+  color: #fff;
+}
+
+.dpad-btn.up    { top: 0;    left: 56px; }
+.dpad-btn.left  { top: 56px; left: 0; }
+.dpad-btn.right { top: 56px; left: 112px; }
+.dpad-btn.down  { top: 112px; left: 56px; }
+
+@media (hover: none) and (pointer: coarse) {
+  .dpad { display: block; }
+  .arcade-footer-bar { display: none; }
+  .btn-action { padding: 8px 10px; font-size: 13px; }
+  .btn-play, .btn-pause-action { padding-top: 14px; padding-bottom: 14px; }
+}
+
+.arcade-cabinet:fullscreen .dpad,
+.arcade-cabinet:-webkit-full-screen .dpad,
+.arcade-cabinet.is-fullscreen .dpad {
+  display: none !important;
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 6px;
+    align-items: flex-start;
+    min-height: 100dvh;
+  }
+  .arcade-cabinet {
+    padding: 10px;
+    border-radius: 12px;
+  }
   .arcade-header {
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 8px;
   }
   .header-section.left, .header-section.right {
+    flex: 1 1 auto;
     justify-content: center;
   }
+  .header-section.center {
+    flex: 1 1 100%;
+    order: -1;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+  }
+  .overlay-modal {
+    padding: 14px;
+    width: 94%;
+  }
+  .overlay-modal h2 { font-size: 12px; }
+  .briefing-title { font-size: 11px; }
+  .overlay-modal p { margin-bottom: 12px; font-size: 12px; }
+  .features-grid { gap: 5px; margin-bottom: 10px; }
+  .feature-card { padding: 5px 8px; }
+  .overlay-icon { font-size: 22px; }
+}
+
+/* Celular deitado: pouca altura, mantém o jogo visível */
+@media (max-height: 480px) and (orientation: landscape) {
+  .canvas-container { width: min(100%, calc((100dvh - 70px) * 19 / 21)); }
+  .arcade-header { margin-bottom: 4px; }
+  .arcade-logo, .level-pill, .footer-bar { display: none; }
+  .dpad { position: fixed; right: 10px; bottom: 10px; margin: 0; opacity: 0.7; z-index: 20; }
+  .arcade-cabinet { flex-direction: column; }
 }

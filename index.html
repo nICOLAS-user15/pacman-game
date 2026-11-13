@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#060811">
   <title>Pac-Man Arcade - 5 Fases</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,7 +58,7 @@
         <div id="standardModal" class="overlay-modal">
           <div class="overlay-icon">🟡</div>
           <h2 id="overlayTitle">PRONTO!</h2>
-          <p id="overlaySubtitle">Use as <b>Setas</b> ou <b>W A S D</b> para jogar<br>Pressione <b>F</b> para Tela Cheia</p>
+          <p id="overlaySubtitle">Use as <b>Setas</b>, <b>W A S D</b> ou <b>deslize o dedo</b> para jogar</p>
           <button id="btnAction" class="btn-play">INICIAR JOGO</button>
         </div>
 
@@ -109,6 +110,14 @@
           <button id="btnStartPhase" class="btn-play pulse">▶ ENTRAR NA FASE</button>
         </div>
       </div>
+    </div>
+
+    <!-- Direcional na tela (aparece apenas em dispositivos de toque) -->
+    <div id="dpad" class="dpad" aria-label="Direcional">
+      <button class="dpad-btn up" data-dir="UP" aria-label="Cima">▲</button>
+      <button class="dpad-btn left" data-dir="LEFT" aria-label="Esquerda">◀</button>
+      <button class="dpad-btn right" data-dir="RIGHT" aria-label="Direita">▶</button>
+      <button class="dpad-btn down" data-dir="DOWN" aria-label="Baixo">▼</button>
     </div>
 
     <!-- Barra de Atalhos Inferior Discreta -->

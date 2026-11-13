@@ -1794,6 +1794,8 @@ class Game {
       }
     });
 
+    this.setupTouchControls();
+
     // Botões do overlay padrão (Iniciar / Game Over / Vitória)
     this.btnAction.addEventListener('click', () => {
       this.sound.init();
@@ -1853,7 +1855,7 @@ class Game {
         this.initGameSession();
         this.gameState = 'READY';
         this.hidePauseModal();
-        this.showStandardOverlay('PAC-MAN', 'Use as Setas ou W A S D para jogar', 'INICIAR JOGO');
+        this.showStandardOverlay('PAC-MAN', 'Use as Setas, W A S D ou deslize o dedo para jogar','INICIAR JOGO');
       });
     }
 
@@ -1883,6 +1885,50 @@ class Game {
     };
     document.addEventListener('fullscreenchange', handleFSChange);
     document.addEventListener('webkitfullscreenchange', handleFSChange);
+  }
+
+  // Controles de toque: deslizar no jogo + direcional na tela
+  setupTouchControls() {
+    const steer = (dir) => {
+      this.sound.init();
+      if (this.gameState === 'READY') this.startPlaying();
+      if (this.gameState === 'PLAYING') this.pacman.setDirection(dir);
+    };
+
+    // Direcional na tela
+    document.querySelectorAll('#dpad [data-dir]').forEach((btn) => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        steer(DIRS[btn.dataset.dir]);
+      });
+    });
+
+    // Deslizar o dedo sobre o canvas
+    const MIN_SWIPE = 24;
+    let start = null;
+    this.canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      start = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }, { passive: true });
+
+    this.canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault(); // impede rolagem/zoom da página durante o jogo
+      if (!start || this.gameState === 'INTERMISSION') return;
+      const t = e.touches[0];
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < MIN_SWIPE) return;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        steer(dx > 0 ? DIRS.RIGHT : DIRS.LEFT);
+      } else {
+        steer(dy > 0 ? DIRS.DOWN : DIRS.UP);
+      }
+      start = { x: t.clientX, y: t.clientY }; // permite encadear curvas no mesmo gesto
+    }, { passive: false });
+
+    const endTouch = () => { start = null; };
+    this.canvas.addEventListener('touchend', endTouch);
+    this.canvas.addEventListener('touchcancel', endTouch);
   }
 
   startPlaying() {
