@@ -42,7 +42,31 @@ const server = http.createServer((req, res) => {
   });
 });
 
+// Abre a URL no navegador padrão do sistema
+function openBrowser(url) {
+  const { spawn } = require('node:child_process');
+  let cmd;
+  let args;
+  if (process.platform === 'win32') {
+    cmd = 'cmd';
+    args = ['/c', 'start', '""', url];
+  } else if (process.platform === 'darwin') {
+    cmd = 'open';
+    args = [url];
+  } else {
+    cmd = 'xdg-open';
+    args = [url];
+  }
+  try {
+    spawn(cmd, args, { detached: true, stdio: 'ignore', windowsHide: true }).on('error', () => {}).unref();
+  } catch (e) {
+    console.log(`Não foi possível abrir o navegador. Acesse ${url} manualmente.`);
+  }
+}
+
 server.listen(PORT, () => {
-  console.log(`Jogo disponível em http://localhost:${PORT}`);
+  const url = `http://localhost:${PORT}/index.html`;
+  console.log(`Jogo rodando em ${url}`);
   console.log('Pressione Ctrl+C para encerrar.');
+  openBrowser(url);
 });
