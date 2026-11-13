@@ -1,57 +1,57 @@
-# 🕹️ Pac-Man Arcade - Edição 5 Fases (Polida)
+# Pac-Man Arcade
 
-Protótipo completo do **Pac-Man** com 5 fases, labirintos dinâmicos, teletransportes laterais e nos cantos, IA veloz e fluida, movimentação precisa sem travamentos e menu arcade refinado.
+Recriação do Pac-Man em HTML5 Canvas e JavaScript puro, com cinco fases, teletransporte nas laterais e nos cantos, e controles pelo teclado.
 
----
+Projeto feito para estudo de game loop, colisão em grade e inteligência artificial simples de fantasmas. Não usa dependências nem etapa de build.
 
-## 🚀 Como Executar
+## Como rodar
 
-Abra o arquivo [`index.html`](file:///C:/Users/home/.gemini/antigravity/scratch/pacman-prototype/index.html) em qualquer navegador moderno:
-```powershell
-Start-Process "C:\Users\home\.gemini\antigravity\scratch\pacman-prototype\index.html"
+Não precisa instalar nada. Clone o repositório e abra o `index.html` no navegador:
+
+```bash
+git clone https://github.com/nICOLAS-user15/pacman-game.git
+cd pacman-game
 ```
 
----
+Depois abra o arquivo `index.html`. Se preferir um servidor local, use:
 
-## 🎮 Controles
+```bash
+npm start
+```
 
-- **Movimento**: Setas direcionais (**▲, ▼, ◀, ▶**) ou teclas **W, A, S, D**
-- **Tela Cheia**: Tecla **F** ou botão **⛶ TELA CHEIA** (ocupa 100% da altura da tela)
-- **Pausa / Retomar**: Barra de **Espaço** ou botão **⏸️**
-- **Reiniciar**: Botão **🔄**
-- **Áudio**: Botão **🔊** (silencia ou ativa os efeitos sonoros)
-- **Sair da Tela Cheia**: Tecla **ESC** ou botão **🗗 SAIR (ESC)**
+## Controles
 
----
+| Ação | Teclado |
+|---|---|
+| Mover | Setas ou W A S D |
+| Pausar e continuar | Espaço |
+| Tela cheia | F |
+| Sair da tela cheia | Esc |
 
-## ✨ Correções e Aprimoramentos Recentes
+## Fases
 
-### 1. 🛡️ Solução Definitiva do Travamento de Paredes
-- **O Pac-Man nunca mais fica preso**:
-  - Implementado o sistema original de alinhamento estrito no centro dos corredores (*strict centerline locking*).
-  - Ao colidir com uma parede, o Pac-Man para **exatamente no centro da interseção** (`centerX, centerY`), sem penetrar no ladrilho da parede.
-  - Como ele para alinhado com a encruzilhada, virar para cima, baixo ou inverter a direção responde **instantaneamente**, sem qualquer travamento ou perda de controle.
+O jogo tem cinco labirintos. Cada um muda cores, velocidade dos fantasmas, duração do modo assustado e tempo de saída da casa dos fantasmas. A quinta fase tem os fantasmas mais rápidos.
 
-### 2. ⚡ Fantasmas em Ação Imediata
-- **Redução drástica do tempo de espera**:
-  - **Blinky (Vermelho)**: Já começa do lado de fora perseguindo imediatamente (0s).
-  - **Pinky (Rosa)**: Sai da casa após apenas **0.4 segundos** em alta velocidade!
-  - **Inky (Ciano)**: Sai em **1.6 segundos**.
-  - **Clyde (Laranja)**: Sai em **2.8 segundos**.
-  - A velocidade de saída da casa foi acelerada em quase 2x, iniciando a perseguição intensa logo nos primeiros segundos da partida.
+## Estrutura
 
-### 3. 🎨 Menu Elegante e Remoção das Setas Virtuais
-- **Interface moderna e limpa**:
-  - As antigas setas azuis do D-pad foram **completamente removidas**, eliminando a poluição visual da tela.
-  - O cabeçalho foi redesenhado no estilo *neon glassmorphism*, com pílulas elegantes para Score, Record, Nível dinâmico, ícones de Vidas e Frutas.
-  - Botões de ação compactos, modernos e com efeitos de brilho arcade.
+```
+├── index.html   # Página, painel e botões
+├── style.css    # Estilos e tela cheia
+├── game.js      # Lógica do jogo: mapas, Pac-Man, fantasmas, pontuação e áudio
+├── package.json # Script para servidor local
+└── LICENSE
+```
 
-### 4. ⛶ Modo Tela Cheia Imersivo Real
-- O labirinto se expande para ocupar **100% da altura útil da tela**, com proporção preservada e pixels nítidos.
+## Como funciona
 
-### 5. 🎯 Curva de Dificuldade Equilibrada (Fase 1 Mais Fácil)
-- **Fase 1 Amigável**:
-  - Velocidade dos fantasmas reduzida para `1.35 px/frame` (o Pac-Man tem velocidade `2.0 px/frame`, sendo ~48% mais rápido, facilitando fugas e curvas).
-  - Pílula de poder estendida para **9.0 segundos** de vulnerabilidade nos fantasmas.
-  - Saídas espaçadas da casa (Pinky aos 2.5s, Inky aos 6s e Clyde aos 10s) para dar tempo de explorar o labirinto.
-  - As fases 2 a 5 aumentam a velocidade progressivamente até o desafio supremo da Fase 5.
+- **Renderização:** tudo é desenhado num `<canvas>` a cada quadro, com `requestAnimationFrame`.
+- **Mapas:** cada fase é uma matriz 19 × 21 em que cada número representa um tipo de célula: parede, pílula, pílula de poder, porta da casa dos fantasmas, portal e área vazia.
+- **Movimento:** o Pac-Man anda alinhado ao centro dos corredores, o que evita atravessar paredes nas curvas.
+- **Fantasmas:** cada um escolhe a direção seguinte olhando para um alvo no tabuleiro. Não voltam para trás, a não ser quando são derrotados ou ficam assustados.
+- **Áudio:** os efeitos sonoros são gerados com a Web Audio API, sem arquivos de som.
+
+## Licença
+
+Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE).
+
+Este projeto é uma recriação para fins de estudo. O nome Pac-Man e o personagem são marcas e propriedade intelectual de seus detentores, e não estão cobertos pela licença deste repositório.
