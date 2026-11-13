@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pac-Man Arcade - 5 Fases</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="arcade-cabinet" id="arcadeCabinet">
+    <!-- Topbar / Menu Arcade Premium -->
+    <header class="arcade-header">
+      <div class="header-section left">
+        <div class="stat-pill score">
+          <span class="pill-label">SCORE</span>
+          <span id="score" class="pill-val">0</span>
+        </div>
+        <div class="stat-pill high">
+          <span class="pill-label">RECORD</span>
+          <span id="high-score" class="pill-val">0</span>
+        </div>
+      </div>
+
+      <div class="header-section center">
+        <h1 class="arcade-logo">PAC-MAN</h1>
+        <div id="levelBadge" class="level-pill">FASE 1/5: O CLÁSSICO</div>
+      </div>
+
+      <div class="header-section right">
+        <div class="lives-group">
+          <span class="pill-label">VIDAS</span>
+          <div id="livesIcons" class="lives-display"></div>
+        </div>
+        <div id="fruitDisplay" class="fruit-badge" title="Bônus da Fase">🍒</div>
+        
+        <div class="menu-actions">
+          <button id="btnFullscreen" class="btn-action primary" title="Tela Cheia (Atalho: Tecla F)">
+            <span class="btn-icon">⛶</span> TELA CHEIA
+          </button>
+          <button id="btnPause" class="btn-action" title="Pausar jogo (Atalho: Espaço)">⏸️</button>
+          <button id="btnRestart" class="btn-action" title="Reiniciar jogo">🔄</button>
+          <button id="btnSound" class="btn-action" title="Ligar/Desligar som">🔊</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Canvas do Jogo -->
+    <div class="canvas-container" id="canvasContainer">
+      <canvas id="gameCanvas" width="380" height="420"></canvas>
+      
+      <!-- Overlay Geral (Início, Game Over, Pausa) -->
+      <div id="gameOverlay" class="overlay">
+        <!-- Modal Padrão (Início / Game Over / Vitória) -->
+        <div id="standardModal" class="overlay-modal">
+          <div class="overlay-icon">🟡</div>
+          <h2 id="overlayTitle">PRONTO!</h2>
+          <p id="overlaySubtitle">Use as <b>Setas</b> ou <b>W A S D</b> para jogar<br>Pressione <b>F</b> para Tela Cheia</p>
+          <button id="btnAction" class="btn-play">INICIAR JOGO</button>
+        </div>
+
+        <!-- Modal de Pausa -->
+        <div id="pauseModal" class="overlay-modal hidden">
+          <div class="overlay-icon">⏸️</div>
+          <h2 id="pauseTitle">PAUSADO</h2>
+          <p class="pause-hint">Jogo pausado</p>
+          <div class="pause-menu">
+            <button id="btnContinue" class="btn-pause-action primary">▶ CONTINUAR</button>
+            <button id="btnRestartPause" class="btn-pause-action">🔄 RECOMEÇAR</button>
+            <button id="btnExitToMenu" class="btn-pause-action danger">🏠 SAIR</button>
+          </div>
+        </div>
+
+        <!-- Card Interativo de Apresentação da Próxima Fase -->
+        <div id="briefingModal" class="overlay-modal briefing hidden">
+          <div class="briefing-badge" id="briefingLevel">FASE 2 DESBLOQUEADA!</div>
+          <h2 id="briefingTitle" class="briefing-title">JARDINS ESMERALDA</h2>
+          
+          <div class="features-grid">
+            <div class="feature-card">
+              <span class="feat-icon" id="briefingFeatureIcon">🌀</span>
+              <div class="feat-info">
+                <span class="feat-label">NOVIDADE</span>
+                <span class="feat-val" id="briefingFeatureText">Túneis Laterais Duplos</span>
+              </div>
+            </div>
+            <div class="feature-card">
+              <span class="feat-icon" id="briefingFruitIcon">🍓</span>
+              <div class="feat-info">
+                <span class="feat-label">FRUTA BÔNUS</span>
+                <span class="feat-val" id="briefingFruitText">Morango (+300 pts)</span>
+              </div>
+            </div>
+            <div class="feature-card wide">
+              <span class="feat-icon">⚡</span>
+              <div class="feat-info">
+                <span class="feat-label">VELOCIDADE DOS FANTASMAS</span>
+                <span class="feat-val" id="briefingSpeedText">+22% Mais Rápidos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bonus-summary" id="briefingBonusSummary">
+            🎉 Bônus da Animação: <span id="briefingBonusPts" class="bonus-highlight">+0 pts</span>
+          </div>
+
+          <button id="btnStartPhase" class="btn-play pulse">▶ ENTRAR NA FASE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de Atalhos Inferior Discreta -->
+    <footer class="arcade-footer-bar">
+      <span class="key-hint">🕹️ <b>SETAS / WASD</b>: Mover</span>
+      <span class="divider">•</span>
+      <span class="key-hint">⏸️ <b>ESPAÇO</b>: Pausa</span>
+      <span class="divider">•</span>
+      <span class="key-hint">⛶ <b>F</b>: Tela Cheia</span>
+    </footer>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
